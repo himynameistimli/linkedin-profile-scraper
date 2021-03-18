@@ -580,6 +580,9 @@ export class LinkedInProfileScraper {
 
       statusLog(logSection, 'Parsing data...', scraperSessionId)
 
+
+
+
       // Only click the expanding buttons when they exist
       const expandButtonsSelectors = [
         '.pv-profile-section.pv-about-section .lt-line-clamp__more', // About
@@ -588,8 +591,12 @@ export class LinkedInProfileScraper {
         '.pv-skill-categories-section [data-control-name="skill_details"]', // Skills
       ];
 
-      const seeMoreButtonsSelectors = ['.pv-entity__description .lt-line-clamp__line.lt-line-clamp__line--last .lt-line-clamp__more[href="#"]', '.lt-line-clamp__more[href="#"]:not(.lt-line-clamp__ellipsis--dummy)']
-
+      // const seeMoreButtonsSelectors = ['.pv-entity__description .lt-line-clamp__line.lt-line-clamp__line--last .lt-line-clamp__more[href="#"]', '.lt-line-clamp__more[href="#"]:not(.lt-line-clamp__ellipsis--dummy)']
+      const seeMoreButtonsSelectors = [
+        '.pv-skills-section__additional-skills', // Skills
+        '.pv-about-section .lt-line-clamp__more', // About bio
+        '.experience-section .pv-profile-section__see-more-inline' // Experience
+      ]
       statusLog(logSection, 'Expanding all sections by clicking their "See more" buttons', scraperSessionId)
 
       for (const buttonSelector of expandButtonsSelectors) {
@@ -644,14 +651,22 @@ export class LinkedInProfileScraper {
         const photo = photoElement?.getAttribute('src') || null
 
         const descriptionElement = document.querySelector('.pv-about__summary-text .lt-line-clamp__raw-line') // Is outside "profileSection"
-        const description = descriptionElement?.textContent || null
+        let description = descriptionElement?.textContent
+
+        if (!description) {
+          const descriptionElements = document.querySelectorAll('.pv-about__summary-text .lt-line-clamp__line') // Is outside "profileSection"
+          description = '';
+          descriptionElements.forEach((element) => {
+            description += element.textContent + ' ';
+          })
+        }
 
         return {
           fullName,
           title,
           location,
           photo,
-          description,
+          description: description || null,
           url
         } as RawProfile
       })
