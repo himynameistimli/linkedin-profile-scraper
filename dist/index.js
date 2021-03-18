@@ -35,6 +35,8 @@ class LinkedInProfileScraper {
             userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
             headless: true,
             proxy: "",
+            proxyUsername: "",
+            proxyPassword: "",
             username: "",
             password: ""
         };
@@ -113,6 +115,12 @@ class LinkedInProfileScraper {
             const blockedResources = ['image', 'media', 'font', 'texttrack', 'object', 'beacon', 'csp_report', 'imageset'];
             try {
                 const page = yield this.browser.newPage();
+                if (!!this.options.proxyUsername) {
+                    yield page.authenticate({
+                        username: this.options.proxyUsername,
+                        password: this.options.proxyPassword,
+                    });
+                }
                 const firstPage = (yield this.browser.pages())[0];
                 yield firstPage.close();
                 const session = yield page.target().createCDPSession();

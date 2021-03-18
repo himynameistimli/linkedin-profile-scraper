@@ -140,6 +140,14 @@ interface ScraperUserDefinedOptions {
    */
   proxy?: string;
   /**
+   *  Proxy Auth username
+   */
+  proxyUsername?: string;
+  /**
+   *  Proxy Auth password
+   */
+  proxyPassword?: string;
+  /**
    *  User LinkedIn username
    */
   username?: string;
@@ -156,6 +164,8 @@ interface ScraperOptions {
   timeout: number;
   headless: boolean;
   proxy: string;
+  proxyUsername: string;
+  proxyPassword: string;
   username: string;
   password: string;
 }
@@ -187,6 +197,8 @@ export class LinkedInProfileScraper {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
     headless: true,
     proxy: "",
+    proxyUsername: "",
+    proxyPassword: "",
     username: "",
     password: ""
   }
@@ -331,6 +343,13 @@ export class LinkedInProfileScraper {
 
     try {
       const page = await this.browser.newPage()
+
+      if (!!this.options.proxyUsername) {
+         await page.authenticate({
+          username: this.options.proxyUsername,
+          password: this.options.proxyPassword,
+        });
+      }
 
       // Use already open page
       // This makes sure we don't have an extra open tab consuming memory

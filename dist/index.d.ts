@@ -51,6 +51,8 @@ interface ScraperUserDefinedOptions {
     timeout?: number;
     headless?: boolean;
     proxy?: string;
+    proxyUsername?: string;
+    proxyPassword?: string;
     username?: string;
     password?: string;
 }
@@ -61,6 +63,8 @@ interface ScraperOptions {
     timeout: number;
     headless: boolean;
     proxy: string;
+    proxyUsername: string;
+    proxyPassword: string;
     username: string;
     password: string;
 }

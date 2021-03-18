@@ -427,8 +427,8 @@
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
-        "version": "4d98fa2c686add539747994a8db1c2a2dbf0780867490191302563133286ce40",
-        "signature": "b14cd1926ecab702a1bee9a22bdfff80794aae966a0de0800c75846d282d2a6c",
+        "version": "900619a596e9c1d5e071506df88c8d0bd739f84a666eb000b9f3676b3e256178",
+        "signature": "671fa1d3b34247b5a44e3a830d024c37e75d2d0156fef79ab5b9ccc2cbb60a7f",
         "affectsGlobalScope": false
       },
       "../src/examples/list-of-urls.ts": {
